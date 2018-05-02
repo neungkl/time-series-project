@@ -1,8 +1,24 @@
 import numpy as np
 
 
+def get_x_label(file_name):
+    data = open('../data/' + file_name, 'r')
+    x = list()
+    label = list()
+    
+    # Read data
+    for i, line in enumerate(data): 
+        array = line.split()
+        label.append(int(float(array[0])))
+        x.append(np.array(array[1:]).astype(float))
+
+    label = np.array(label).reshape((len(label)))
+    x = np.array(x).reshape((len(x), x[0].shape[0]))
+    return x, label
+
+
 def get_class_x(train_file_name):
-    train_data = open('./data/' + train_file_name, 'r')
+    train_data = open('../data/' + train_file_name, 'r')
     train_x = list()
     train_label = list()
     
