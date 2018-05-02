@@ -122,7 +122,7 @@ func DtwAll() {
 	total := len(yLabel)
 	// total := 5
 
-	dist := make(chan int, 8)
+	dist := make(chan int, 6)
 	res := make(chan int)
 	finish := make(chan int)
 
@@ -139,7 +139,10 @@ func DtwAll() {
 		dist <- i
 		go func(is int) {
 			class := DtwFindClass(yFeatures[is])
-			fmt.Printf("%d: %d %d\n", is+1, class, yLabel[is])
+
+			if (is+1)%10 == 0 {
+				fmt.Printf("%d: %d %d\n", is+1, class, yLabel[is])
+			}
 
 			if class == yLabel[is] {
 				res <- 1
@@ -157,8 +160,8 @@ func DtwAll() {
 }
 
 func main() {
-	xLabel, xFeatures = ReadFile("../data/50words_TRAIN")
-	yLabel, yFeatures = ReadFile("../data/50words_TEST")
+	xLabel, xFeatures = ReadFile("../data/CBF_TRAIN")
+	yLabel, yFeatures = ReadFile("../data/CBF_TEST")
 
 	if len(os.Args) < 4 {
 		panic("Arguments not enough")
