@@ -6,7 +6,6 @@ services:
       - .:/home/work
     ports:
       - 8888:8888
-      - 6006:6006
   
   go:
     image: golang
