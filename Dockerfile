@@ -1,4 +1,4 @@
-FROM neungkl/keras
+FROM neungkl/ml-utility
 
 RUN pip3 install jupyterlab
 
