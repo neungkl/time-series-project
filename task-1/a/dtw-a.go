@@ -51,7 +51,9 @@ func ReadFile(fileDir string) ([]int, [][]float64) {
 			j = j + 1
 		}
 
-		xFeatures = append(xFeatures, feature)
+		if len(feature) > 0 {
+			xFeatures = append(xFeatures, feature)
+		}
 	}
 
 	return xLabel, xFeatures
@@ -131,6 +133,7 @@ func DtwAll() {
 			correct += <-res
 		}
 
+		fmt.Printf("w1: %v, w2: %v, w3: %v\n", w1, w2, w3)
 		fmt.Printf("Result %v: %v/%v\n", float64(correct)/float64(total), correct, total)
 		finish <- 0
 	}()
@@ -140,7 +143,7 @@ func DtwAll() {
 		go func(is int) {
 			class := DtwFindClass(yFeatures[is])
 
-			if (is+1)%10 == 0 {
+			if (is+1)%50 == 0 {
 				fmt.Printf("%d: %d %d\n", is+1, class, yLabel[is])
 			}
 
@@ -160,11 +163,9 @@ func DtwAll() {
 }
 
 func main() {
-	xLabel, xFeatures = ReadFile("../data/CBF_TRAIN")
-	yLabel, yFeatures = ReadFile("../data/CBF_TEST")
 
-	if len(os.Args) < 4 {
-		panic("Arguments not enough")
+	if len(os.Args) < 5 {
+		panic("Arguments not enough: <w1> <w2> <w3> <dataset>")
 	}
 
 	var err error
@@ -175,7 +176,10 @@ func main() {
 	w3, err = strconv.ParseFloat(os.Args[3], 64)
 	check(err)
 
-	fmt.Printf("w1: %v, w2: %v, w3: %v\n", w1, w2, w3)
+	xLabel, xFeatures = ReadFile("../data/" + os.Args[4] + "_TRAIN")
+	yLabel, yFeatures = ReadFile("../data/" + os.Args[4] + "_TEST")
+
+	fmt.Printf("w1: %v, w2: %v, w3: %v, data: %v\n", w1, w2, w3, os.Args[4])
 
 	DtwAll()
 }

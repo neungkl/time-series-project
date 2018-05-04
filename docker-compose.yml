@@ -11,5 +11,5 @@ services:
   go:
     image: golang
     volumes:
-      - .:/usr/src/myapp
+      - .:/go/src/
     tty: true
