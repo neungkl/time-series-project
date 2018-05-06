@@ -1,7 +1,7 @@
 Time Series Project
 ===
 
-A time series project during studying.
+A time series project that play around with Dynamic time warping algorithm.
 
 👉 Task: [task.pdf](document/task.pdf) <br>
 👉 Report: [report.pdf](document/report.pdf)
